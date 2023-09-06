@@ -17,7 +17,7 @@ public class Authentication {
 
     @GET
     @PermitAll
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String generate() {
         return Jwt.issuer("http://127.0.0.1:8080")
         .upn("mateusvedoy@compiler.dev")
