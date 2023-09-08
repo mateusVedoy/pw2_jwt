@@ -7,6 +7,7 @@ import org.eclipse.microprofile.jwt.Claims;
 
 import io.smallrye.jwt.build.Jwt;
 import jakarta.annotation.security.PermitAll;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -17,12 +18,15 @@ public class Authentication {
 
     @GET
     @PermitAll
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public String generate() {
         return Jwt.issuer("http://127.0.0.1:8080")
         .upn("mateusvedoy@compiler.dev")
         .groups(new HashSet<>(Arrays.asList("User", "Admin")))
         .claim(Claims.email, "mateusvedoy@compiler.dev")
-        .sign();
+        .claim(Claims.full_name, "Mateus Vedoy Goes")
+        .innerSign()
+        .encrypt();
     }
 }
